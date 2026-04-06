@@ -40,6 +40,13 @@ export async function POST(request: Request) {
       return Response.json({ error: 'Gemini returned unexpected shape (not an object)' }, { status: 500 })
     }
 
+    if (typeof detail.code !== 'string' || typeof detail.language !== 'string') {
+      return Response.json(
+        { error: 'Gemini response missing required fields: code, language' },
+        { status: 500 },
+      )
+    }
+
     const highlightedCode = await highlightCode(
       detail.code,
       detail.language || 'text',
