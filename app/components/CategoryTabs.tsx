@@ -28,7 +28,7 @@ export function CategoryTabs({ activeCategory, onSelect }: CategoryTabsProps) {
             style={{
               padding: '0.4rem 1rem',
               borderRadius: '9999px',
-              border: `1px solid ${isActive ? cat.colour : '#1e293b'}`,
+              border: `1px solid ${cat.colour}`,
               background: isActive ? cat.colour : 'transparent',
               color: isActive ? '#0a0a0f' : cat.colour,
               fontFamily: 'inherit',
