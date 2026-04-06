@@ -1,6 +1,8 @@
 import { GoogleGenerativeAI } from "@google/generative-ai"
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
+const apiKey = process.env.GEMINI_API_KEY
+if (!apiKey) throw new Error("Missing required env var: GEMINI_API_KEY")
+const genAI = new GoogleGenerativeAI(apiKey)
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
 
 export async function generateContent(prompt: string): Promise<string> {
@@ -24,9 +26,10 @@ export function parseGeminiJson<T>(raw: string, bracketChar: "[" | "{"): T {
 
   // Tier 2: strip markdown fences
   const stripped = raw
+    .trim()
     .replace(/^```json\s*/i, "")
     .replace(/^```\s*/i, "")
-    .replace(/\s*```$/i, "")
+    .replace(/\s*```\s*$/i, "")
     .trim()
   try {
     return JSON.parse(stripped) as T
