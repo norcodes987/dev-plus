@@ -122,6 +122,7 @@ export function TopicCard({ card, categoryColour, onClick }: TopicCardProps) {
               borderRadius: '0.25rem',
               padding: '0.1rem 0.4rem',
               fontSize: '0.7rem',
+              fontFamily: 'monospace',
             }}
           >
             {tag}
