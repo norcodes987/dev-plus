@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { CATEGORIES } from './CategoryTabs';
 import { DetailView } from './DetailView';
@@ -17,7 +17,12 @@ export function TopicDetailContent() {
     'intermediate') as TopicCard['difficulty'];
   const impact = (searchParams.get('impact') ??
     'medium') as TopicCard['impact'];
-  const tags = searchParams.get('tags')?.split(',').filter(Boolean) ?? [];
+  // Stabilise tags so useCallback doesn't get a new array reference each render
+  const tagsParam = searchParams.get('tags') ?? '';
+  const tags = useMemo(
+    () => tagsParam.split(',').filter(Boolean),
+    [tagsParam],
+  );
 
   const categoryColour =
     CATEGORIES.find((c) => c.id === category)?.colour ?? '#6366f1';
